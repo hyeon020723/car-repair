@@ -14,9 +14,9 @@ function FindCenterPage() {
 
   // Dummy data for repair centers
   const repairCenters = [
-    { name: "Hyundai Motor Studio", address: "123, Main Street, Busan" },
-    { name: "Kia Service Center", address: "456, Second Street, Busan" },
-    { name: "Auto Repair Co.", address: "789, Third Avenue, Busan" },
+    { name: "Hyundai Motor Studio", address: "대연동, 부산" },
+    { name: "Kia Service Center", address: "남천동, 부산" },
+    { name: "Auto Repair Co.", address: "감만동, 부산" },
   ];
 
   const handleSearch = () => {
@@ -29,15 +29,21 @@ function FindCenterPage() {
 
     // Simulate API call
     setTimeout(() => {
-      setCenters(
-        repairCenters.filter((center) => center.address.includes(searchTerm))
+      const filteredCenters = repairCenters.filter((center) =>
+        center.address.includes(searchTerm)
       );
+      if (filteredCenters.length === 0) {
+        setError("검색결과를 찾을 수 없습니다.");
+      } else {
+        setCenters(filteredCenters);
+      }
       setLoading(false);
     }, 1000);
   };
 
   return (
     <div className="find-center-container">
+      {/* navbar */}
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container
           style={{
@@ -54,6 +60,7 @@ function FindCenterPage() {
           <div style={{ width: 24 }}></div>{" "}
         </Container>
       </Navbar>
+
       <div style={{ textAlign: "center", margin: "10vw" }}>
         <input
           type="text"
@@ -73,6 +80,7 @@ function FindCenterPage() {
         </p>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
+        {!loading && !error === 0 && <p>잠시 후 다시 이용해주세요</p>}{" "}
         <ul>
           {centers.map((center, index) => (
             <li key={index}>
