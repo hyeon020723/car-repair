@@ -77,9 +77,9 @@ function HomePage() {
           </Button>
         </Link>
 
-        <Link to="/quote">
+        <Link to="/result">
           <Button variant="secondary" size="lg" style={{ width: "100%" }}>
-            quote
+            result
           </Button>
         </Link>
       </div>

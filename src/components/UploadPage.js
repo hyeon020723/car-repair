@@ -53,7 +53,9 @@ function UploadPage() {
             padding: "50px",
           }}>
           <input type="file" onChange={handleFileChange} required />
-          <p>손상된 부품이 잘 보이는 사진으로 한장만 업로드해주세요</p>
+          <p style={{ fontSize: "0.75em", whiteSpace: "nowrap" }}>
+            손상된 부품이 잘 보이는 사진으로 한장만 업로드해주세요
+          </p>
         </div>
         <button type="submit" disabled={!file}>
           견적 내기
