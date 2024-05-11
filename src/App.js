@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./components/HomePage";
-import UploadDamagePage from "./components/UploadDamagePage";
+import UploadPage from "./components/UploadPage";
 import QuotePage from "./components/QuotePage";
 import FindCenterPage from "./components/FindCenterPage"; // Ensure you have this component created for finding repair centers
 
@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/find-center" element={<FindCenterPage />} />
         <Route path="/quote" element={<QuotePage />} />
-        <Route path="/upload-damage" element={<UploadDamagePage />} />
+        <Route path="/upload-damage" element={<UploadPage />} />
       </Routes>
     </Router>
   );
