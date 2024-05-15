@@ -85,7 +85,7 @@ function HomePage() {
           backgroundColor: "rgba(204, 204, 204, 0.25)",
           textAlign: "center",
           fontSize: "0.75em",
-          whiteSpace: "nowrap",
+          display: "block",
           lineHeight: "1em",
         }}>
         <p style={{ lineHeight: "1.25em" }}>
