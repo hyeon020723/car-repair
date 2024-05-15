@@ -3,8 +3,8 @@ import { Container, Navbar } from "react-bootstrap"; // Slightly adjusted import
 import { useLocation } from "react-router-dom"; // Import useLocation
 
 function ResultPage() {
-  const [carCost, setCarCost] = useState(150000);
-  const [personCost, setPersonCost] = useState(100000);
+  const [carCost] = useState(150000);
+  const [personCost] = useState(100000);
   const [sumCost, setSumCost] = useState(carCost + personCost); // Initialize directly with sum
   const location = useLocation(); // Use location to access the passed state
   const image = location.state?.image; // Access the image from the state
@@ -13,10 +13,6 @@ function ResultPage() {
     // This useEffect will now only run when carCost or personCost changes
     setSumCost(carCost + personCost);
   }, [carCost, personCost]);
-
-  const fileSend = () => {
-    console.log("File send functionality goes here.");
-  };
 
   return (
     <div className="result-container">
