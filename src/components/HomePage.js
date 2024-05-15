@@ -83,6 +83,30 @@ function HomePage() {
           </Button>
         </Link>
       </div>
+
+      <div
+        style={{
+          marginTop: "5vh",
+          padding: "5vh",
+          backgroundColor: "rgba(204, 204, 204, 0.25)",
+          textAlign: "center",
+          fontSize: "0.75em",
+          whiteSpace: "nowrap",
+          lineHeight: "1em",
+        }}>
+        <p style={{ lineHeight: "1.25em" }}>
+          이 서비스는 AI 기술을 활용하여 차량의 파손 정도를 분석하고,
+          <br />
+          관련 데이터를 바탕으로 예상 수리비를 견적으로 제공합니다. <br />
+          실제 수리비와는 차이가 있을 수 있으므로 참고용으로만 사용해 주시기
+          바랍니다.
+        </p>
+        <p>&copy; 2024 차량 수리비 견적 서비스. All rights reserved</p>
+        <p>국립부경대학교 시스템경영안전공학부 캡스톤디자인</p>
+        <p>
+          이메일 : <a href="mailto:dlga723@naver.com">dlga723@naver.com</a>
+        </p>
+      </div>
     </div>
   );
 }
