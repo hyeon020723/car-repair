@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react"; // Import useEffect here
 import { Container, Navbar } from "react-bootstrap"; // Slightly adjusted import for cleanliness
+import { useLocation } from "react-router-dom"; // Import useLocation
 
 function ResultPage() {
   const [carCost, setCarCost] = useState(150000);
   const [personCost, setPersonCost] = useState(100000);
   const [sumCost, setSumCost] = useState(carCost + personCost); // Initialize directly with sum
+  const location = useLocation(); // Use location to access the passed state
+  const image = location.state?.image; // Access the image from the state
 
   useEffect(() => {
     // This useEffect will now only run when carCost or personCost changes
@@ -36,20 +39,24 @@ function ResultPage() {
 
       <div
         style={{
-          height: "25vh",
+          height: "35vh",
           margin: " 5vw 10vw",
           background: "#ccc",
+          overflow: "hidden",
         }}>
-        <img
-          src=""
-          style={{
-            width: "100%",
-            maxHeight: "50vh",
-            maxWidth: "50vw",
-            objectFit: "contain",
-          }}
-          alt="img"
-        />
+        {image ? (
+          <img
+            src={image} // Display the uploaded image
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "scale-down",
+            }}
+            alt="Uploaded"
+          />
+        ) : (
+          <p>No image uploaded</p>
+        )}
       </div>
 
       <div style={{ margin: "5vw 10vw" }}>
@@ -75,7 +82,7 @@ function ResultPage() {
           </p>
         </div>
       </div>
-      <div
+      {/* <div
         style={{
           display: "flex",
           margin: "5vw 0vw",
@@ -95,7 +102,7 @@ function ResultPage() {
           }}>
           파일 보내기
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

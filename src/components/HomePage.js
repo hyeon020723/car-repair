@@ -76,12 +76,6 @@ function HomePage() {
             수리센터찾기
           </Button>
         </Link>
-
-        <Link to="/result">
-          <Button variant="secondary" size="lg" style={{ width: "100%" }}>
-            result
-          </Button>
-        </Link>
       </div>
 
       <div

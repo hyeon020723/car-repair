@@ -1,26 +1,32 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Make sure this is imported correctly
 
-//nav
 import Container from "react-bootstrap/Container";
-// import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-// import NavDropdown from "react-bootstrap/NavDropdown";
+import Button from "react-bootstrap/Button";
 
 function UploadPage() {
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate(); // Correctly initialized navigate
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFile(reader.result); // Store the image as a base64 string
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    // Add your logic to upload the file here
+    // Simulate a file upload
     setTimeout(() => {
       setIsLoading(false);
-      alert("File uploaded successfully!");
+      alert("사진이 업로드 되었습니다.");
+      navigate("/result", { state: { image: file } }); // Use navigate to redirect and pass state
     }, 2000);
   };
 
@@ -39,7 +45,7 @@ function UploadPage() {
             {"<"}
           </Navbar.Brand>
           <div style={{ textAlign: "center" }}>차량 파손 정보 등록</div>
-          <div style={{ width: 24 }}></div>{" "}
+          <div style={{ width: 24 }}></div>
         </Container>
       </Navbar>
 
@@ -57,9 +63,13 @@ function UploadPage() {
             손상된 부품이 잘 보이는 사진으로 한장만 업로드해주세요
           </p>
         </div>
-        <button type="submit" disabled={!file}>
+        <Button
+          variant={file ? "primary" : "secondary"}
+          size="lg"
+          type="submit"
+          disabled={!file}>
           견적 내기
-        </button>
+        </Button>
       </form>
       {isLoading && <p>Loading...</p>}
     </div>

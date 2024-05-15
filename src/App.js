@@ -13,8 +13,12 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/find-center" element={<FindCenterPage />} />
-        <Route path="/result" element={<ResultPage />} />
-        <Route path="/upload-damage" element={<UploadPage />} />
+        <Route path="/result" component={ResultPage} element={<ResultPage />} />
+        <Route
+          path="/upload-damage"
+          component={UploadPage}
+          element={<UploadPage />}
+        />
       </Routes>
     </Router>
   );
