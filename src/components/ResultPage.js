@@ -1,16 +1,30 @@
-import React, { useState, useEffect } from "react"; // Import useEffect here
-import { Container, Navbar } from "react-bootstrap"; // Slightly adjusted import for cleanliness
-import { useLocation } from "react-router-dom"; // Import useLocation
+import React, { useState, useEffect } from "react";
+import { Container, Navbar } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 
 function ResultPage() {
   const [carCost] = useState(150000);
   const [personCost] = useState(100000);
-  const [sumCost, setSumCost] = useState(carCost + personCost); // Initialize directly with sum
-  const location = useLocation(); // Use location to access the passed state
-  const image = location.state?.image; // Access the image from the state
+  const [sumCost, setSumCost] = useState(carCost + personCost);
+
+  const location = useLocation();
+  const image = location.state?.image;
+
+  // Ensure the response is available and parse the JSON body
+  const { response } = location.state || {};
+  let damageLocation = "No data";
+  let estimatedRepairCost = "No data";
+  if (response) {
+    try {
+      const responseBody = JSON.parse(response.body);
+      damageLocation = responseBody.damage_location;
+      estimatedRepairCost = responseBody.estimated_repair_cost;
+    } catch (error) {
+      console.error("Error parsing response body", error);
+    }
+  }
 
   useEffect(() => {
-    // This useEffect will now only run when carCost or personCost changes
     setSumCost(carCost + personCost);
   }, [carCost, personCost]);
 
@@ -36,13 +50,13 @@ function ResultPage() {
       <div
         style={{
           height: "35vh",
-          margin: " 5vw 10vw",
+          margin: "5vw 10vw",
           background: "#ccc",
           overflow: "hidden",
         }}>
         {image ? (
           <img
-            src={image} // Display the uploaded image
+            src={image}
             style={{
               width: "100%",
               height: "100%",
@@ -55,50 +69,32 @@ function ResultPage() {
         )}
       </div>
 
-      <div style={{ margin: "5vw 10vw" }}>
+      <div style={{ margin: "7.5vw" }}>
         <p
           style={{
             textAlign: "center",
             fontSize: "0.75em",
-            whiteSpace: "nowrap",
+            whiteWhite: "nowrap",
           }}>
           실제 수리비와 차이가 있을 수 있습니다.
         </p>
-
-        <p style={{ color: "royalblue" }}>선택내역</p>
+        {/* <p style={{ color: "royalblue" }}>선택내역</p> */}
       </div>
 
       <div style={{ margin: "5vw 10vw" }}>
-        <p style={{ color: "royalblue" }}>예상 수리비</p>
+        <p style={{ color: "royalblue", float: "left" }}>예상 수리비</p>
         <div style={{ textAlign: "right" }}>
-          <p>부품비 {carCost.toLocaleString()}원</p>
-          <p>+ 공임비 {personCost.toLocaleString()}원</p>
+          <p>
+            파손위치 {damageLocation}
+            <br />
+            수리비 {estimatedRepairCost}
+          </p>
+          <p>+ 공임비 150,000원</p>
           <p style={{ fontSize: "1.25em", fontWeight: "bold" }}>
             = 총 {sumCost.toLocaleString()}원
           </p>
         </div>
       </div>
-      {/* <div
-        style={{
-          display: "flex",
-          margin: "5vw 0vw",
-          width: "100%",
-          flexDirection: "column",
-          alignItems: "center",
-        }}>
-        <button
-          onClick={fileSend}
-          style={{
-            width: "50vw",
-            padding: "1vw 2vw",
-            borderRadius: "30px",
-            border: "none",
-            backgroundColor: "#ccc",
-            color: "#fff",
-          }}>
-          파일 보내기
-        </button>
-      </div> */}
     </div>
   );
 }
