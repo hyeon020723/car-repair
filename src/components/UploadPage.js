@@ -62,11 +62,13 @@ function UploadPage() {
         alert("다시 시도해주세요.");
       });
   };
+  /* eslint-enable no-unused-vars */
+  //eslint-disable-line no-unused-vars
   const requestData = {
-    //eslint-disable-line no-unused-vars
     car_type: carType, // Assuming 'carType' is a string e.g., "Hyundai"
     model: model, // Assuming 'model' is a string e.g., "2020"
   };
+  /* eslint-enable no-unused-vars */
 
   return (
     <div className="upload-container">
