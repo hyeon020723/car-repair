@@ -125,9 +125,11 @@ function UploadPage() {
               onChange={(e) => setCarType(e.target.value)}
               required>
               <option value="">Select Car Type</option>
-              <option value="Hyundai">Hyundai Sonata</option>
-              <option value="Kia">Kia Sorento</option>
-              <option value="Chevrolet">Chevrolet Spark</option>
+              <option value="BMW">BMW</option>
+              <option value="Audi">아우디</option>
+              <option value="Volkswagen">폭스바겐</option>
+              <option value="Kia">기아</option>
+              <option value="Hyundai">현대</option>
             </select>
 
             <select
@@ -141,9 +143,35 @@ function UploadPage() {
               onChange={(e) => setModel(e.target.value)}
               required>
               <option value="">Select Model</option>
-              <option value="Sonata">2020</option>
-              <option value="Sorento">2021</option>
-              <option value="Spark">2022</option>
+              {carType === "BMW" && (
+                <>
+                  <option value="3 Series">3 시리즈</option>
+                  <option value="5 Series">5 시리즈</option>
+                </>
+              )}
+              {carType === "Audi" && (
+                <>
+                  <option value="A4">A4</option>
+                  <option value="A6">A6</option>
+                </>
+              )}
+              {carType === "Volkswagen" && (
+                <>
+                  <option value="golf">골프</option>
+                </>
+              )}
+              {carType === "Kia" && (
+                <>
+                  <option value="K3">K3</option>
+                  <option value="K5">K5</option>
+                </>
+              )}
+              {carType === "Hyundai" && (
+                <>
+                  <option value="Sonata 14 LF">소나타 14 LF</option>
+                  <option value="Grandeur 15 HG">그랜저 15 HG</option>
+                </>
+              )}
             </select>
           </div>
         </div>
