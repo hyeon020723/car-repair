@@ -35,6 +35,32 @@ function UploadPage() {
       model: model, // Assuming 'model' is a string e.g., "2020"
     };
 
+    // 이미지
+    const formData = new FormData();
+    formData.append("image", file); // `file`은 이미지 파일의 데이터를 포함해야 합니다. 여기서 file은 이미 Base64로 인코딩된 상태입니다.
+
+    console.log("Sending image to the server...");
+
+    setIsLoading(true);
+    fetch("http://localhost:5000/upload", {
+      method: "POST",
+      body: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Image upload successful:", data);
+        setIsLoading(false);
+        alert("이미지 처리가 완료되었습니다.");
+        navigate("/result", { state: { image: file, response: data } });
+      })
+      .catch((error) => {
+        console.error("Image upload error:", error);
+        setIsLoading(false);
+        alert("이미지 업로드에 실패하였습니다.");
+      });
     console.log("Sending data:", requestData);
 
     setIsLoading(true);
