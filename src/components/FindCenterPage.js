@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 // import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { flushSync } from "react-dom";
 // import NavDropdown from "react-bootstrap/NavDropdown";
 
 import { Map, MapMarker } from "react-kakao-maps-sdk";
@@ -59,6 +60,7 @@ function FindCenterPage() {
       if (status === window.kakao.maps.services.Status.OK) {
         // handle the data
         console.log(data);
+
         const bounds = new window.kakao.maps.LatLngBounds();
         let markers = [];
 
@@ -70,6 +72,9 @@ function FindCenterPage() {
               lng: data[i].x,
             },
             content: data[i].place_name,
+            address: data[i].address_name,
+            phone: data[i].phone,
+            place_url: data[i].place_url,
           });
           // @ts-ignore
           bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
@@ -133,7 +138,7 @@ function FindCenterPage() {
         ))}
       </Map>
 
-      <div style={{ textAlign: "center", margin: "10vw" }}>
+      <div style={{ textAlign: "center", margin: "5vw" }}>
         {/* <input
           type="text"
           value={searchTerm}
@@ -146,10 +151,42 @@ function FindCenterPage() {
             lineHeight: "2em",
             fontSize: "0.75rem",
             whiteSpace: "nowrap",
+            marginBottom: "5vw",
           }}>
           부산 지역을 중심으로 찾은 결과입니다. <br />
           센터마다 수리 가능 부품 및 운영 시간이 다르니 꼭 확인 후 방문해주세요!
-        </p>
+        </p>{" "}
+        <div style={{ textAlign: "center", width: "100%" }}>
+          {markers.map((marker, index) => (
+            <div
+              key={index}
+              style={{
+                marginBottom: "10px",
+                textAlign: "left",
+                float: "left",
+                width: "100%",
+                height: "20vw",
+              }}>
+              <strong style={{ textAlign: "center" }}>{marker.content}</strong>{" "}
+              {}
+              <a
+                href={marker.place_url}
+                target="_blank"
+                rel="noopener noreferrer">
+                <button
+                  style={{
+                    float: "right",
+                    marginTop: "5vh",
+                  }}>
+                  자세히 보기
+                </button>{" "}
+                {}
+              </a>
+              <p style={{ margin: 0 }}>주소: {marker.address}</p> {}
+              <p>전화: {marker.phone}</p> {}
+            </div>
+          ))}
+        </div>
         {/* {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
         {!loading && !error === 0 && <p>잠시 후 다시 이용해주세요</p>}{" "}
