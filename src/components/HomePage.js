@@ -45,7 +45,7 @@ function HomePage() {
   useEffect(() => {
     //카카오맵 스크립트 읽어오기
     const my_script = new_script(
-      "https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=ea8717785fb1974334bb2e94bff49b0f"
+      "https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=ea8717785fb1974334bb2e94bff49b0f&libraries=services,clusterer"
     );
 
     //스크립트 읽기 완료 후 카카오맵 설정

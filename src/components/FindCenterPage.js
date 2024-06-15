@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //nav
 import Container from "react-bootstrap/Container";
@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 // import NavDropdown from "react-bootstrap/NavDropdown";
 
-import { Map } from "react-kakao-maps-sdk";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 // import useKakaoLoader from "./useKakaoLoader";
 
 function FindCenterPage() {
@@ -16,33 +16,77 @@ function FindCenterPage() {
   const [error, setError] = useState("");
 
   // Dummy data for repair centers
-  const repairCenters = [
-    { name: "Hyundai Motor Studio", address: "대연동, 부산" },
-    { name: "Kia Service Center", address: "남천동, 부산" },
-    { name: "Auto Repair Co.", address: "감만동, 부산" },
-  ];
+  // const repairCenters = [
+  //   { name: "Hyundai Motor Studio", address: "대연동, 부산" },
+  //   { name: "Kia Service Center", address: "남천동, 부산" },
+  //   { name: "Auto Repair Co.", address: "감만동, 부산" },
+  // ];
 
-  const handleSearch = () => {
-    if (!searchTerm) {
-      setError("Please enter a search term");
-      return;
-    }
-    setError("");
-    setLoading(true);
+  // const handleSearch = () => {
+  //   if (!searchTerm) {
+  //     setError("Please enter a search term");
+  //     return;
+  //   }
+  //   setError("");
+  //   setLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      const filteredCenters = repairCenters.filter((center) =>
-        center.address.includes(searchTerm)
-      );
-      if (filteredCenters.length === 0) {
-        setError("검색결과를 찾을 수 없습니다.");
-      } else {
-        setCenters(filteredCenters);
+  //   // Simulate API call
+  //   setTimeout(() => {
+  //     const filteredCenters = repairCenters.filter((center) =>
+  //       center.address.includes(searchTerm)
+  //     );
+  //     if (filteredCenters.length === 0) {
+  //       setError("검색결과를 찾을 수 없습니다.");
+  //     } else {
+  //       setCenters(filteredCenters);
+  //     }
+  //     setLoading(false);
+  //   }, 1000);
+  // };
+
+  const [info, setInfo] = useState();
+  const [markers, setMarkers] = useState([]);
+  const [map, setMap] = useState();
+  // const [sdkReady, setSdkReady] = useState(false);
+
+  // Use Places service after confirming the SDK is ready
+  useEffect(() => {
+    if (!map) return;
+
+    const places = new window.kakao.maps.services.Places();
+
+    places.keywordSearch("부산 자동차 정비", (data, status, _pagination) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        // handle the data
+        console.log(data);
+        const bounds = new window.kakao.maps.LatLngBounds();
+        let markers = [];
+
+        for (var i = 0; i < data.length; i++) {
+          // @ts-ignore
+          markers.push({
+            position: {
+              lat: data[i].y,
+              lng: data[i].x,
+            },
+            content: data[i].place_name,
+          });
+          // @ts-ignore
+          bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
+        }
+        setMarkers(markers);
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
+      } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+        alert("검색 결과가 존재하지 않습니다.");
+        return;
+      } else if (status === window.kakao.maps.services.Status.ERROR) {
+        alert("검색 결과 중 오류가 발생했습니다.");
+        return;
       }
-      setLoading(false);
-    }, 1000);
-  };
+    });
+  }, [map]);
 
   return (
     <div className="find-center-container">
@@ -75,27 +119,38 @@ function FindCenterPage() {
           width: "100%",
           height: "250px",
         }}
-        level={6}
-      />
+        level={10}
+        onCreate={setMap}>
+        {markers.map((marker) => (
+          <MapMarker
+            key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+            position={marker.position}
+            onClick={() => setInfo(marker)}>
+            {info && info.content === marker.content && (
+              <div style={{ color: "#000" }}>{marker.content}</div>
+            )}
+          </MapMarker>
+        ))}
+      </Map>
 
       <div style={{ textAlign: "center", margin: "10vw" }}>
-        <input
+        {/* <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Enter location"
         />
-        <button onClick={handleSearch}>Search</button>
+        <button onClick={handleSearch}>Search</button> */}
         <p
           style={{
             lineHeight: "2em",
             fontSize: "0.75rem",
             whiteSpace: "nowrap",
           }}>
-          ㅇㅇ동(읍/면/리)명으로 검색해주세요. <br />
+          부산 지역을 중심으로 찾은 결과입니다. <br />
           센터마다 수리 가능 부품 및 운영 시간이 다르니 꼭 확인 후 방문해주세요!
         </p>
-        {loading && <p>Loading...</p>}
+        {/* {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
         {!loading && !error === 0 && <p>잠시 후 다시 이용해주세요</p>}{" "}
         <ul>
@@ -105,7 +160,7 @@ function FindCenterPage() {
               <p>{center.address}</p>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );
