@@ -96,7 +96,10 @@ function FindCenterPage() {
   return (
     <div className="find-center-container">
       {/* navbar */}
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar
+        expand="lg"
+        className="bg-body-tertiary"
+        style={{ position: "fixed", width: "100%", top: 0, zIndex: 1000 }}>
         <Container
           style={{
             display: "flex",
@@ -112,82 +115,86 @@ function FindCenterPage() {
           <div style={{ width: 24 }}></div>{" "}
         </Container>
       </Navbar>
-      <Map
-        id="map"
-        center={{
-          // 기본 부경대 대연캠퍼스 좌표
-          lat: 35.13399144993564,
-          lng: 129.10554278982033,
-        }}
-        style={{
-          // 지도의 크기
-          width: "100%",
-          height: "250px",
-        }}
-        level={10}
-        onCreate={setMap}>
-        {markers.map((marker) => (
-          <MapMarker
-            key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-            position={marker.position}
-            onClick={() => setInfo(marker)}>
-            {info && info.content === marker.content && (
-              <div style={{ color: "#000" }}>{marker.content}</div>
-            )}
-          </MapMarker>
-        ))}
-      </Map>
+      <div style={{ marginTop: "10vh" }}>
+        <Map
+          id="map"
+          center={{
+            // 기본 부경대 대연캠퍼스 좌표
+            lat: 35.13399144993564,
+            lng: 129.10554278982033,
+          }}
+          style={{
+            // 지도의 크기
+            width: "100%",
+            height: "250px",
+          }}
+          level={10}
+          onCreate={setMap}>
+          {markers.map((marker) => (
+            <MapMarker
+              key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+              position={marker.position}
+              onClick={() => setInfo(marker)}>
+              {info && info.content === marker.content && (
+                <div style={{ color: "#000" }}>{marker.content}</div>
+              )}
+            </MapMarker>
+          ))}
+        </Map>
 
-      <div style={{ textAlign: "center", margin: "5vw" }}>
-        {/* <input
+        <div style={{ textAlign: "center", margin: "5vw" }}>
+          {/* <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Enter location"
         />
         <button onClick={handleSearch}>Search</button> */}
-        <p
-          style={{
-            lineHeight: "2em",
-            fontSize: "0.75rem",
-            whiteSpace: "nowrap",
-            marginBottom: "5vw",
-          }}>
-          부산 지역을 중심으로 찾은 결과입니다. <br />
-          센터마다 수리 가능 부품 및 운영 시간이 다르니 꼭 확인 후 방문해주세요!
-        </p>{" "}
-        <div style={{ textAlign: "center", width: "100%" }}>
-          {markers.map((marker, index) => (
-            <div
-              key={index}
-              style={{
-                marginBottom: "10px",
-                textAlign: "left",
-                float: "left",
-                width: "100%",
-                height: "20vw",
-              }}>
-              <strong style={{ textAlign: "center" }}>{marker.content}</strong>{" "}
-              {}
-              <a
-                href={marker.place_url}
-                target="_blank"
-                rel="noopener noreferrer">
-                <button
-                  style={{
-                    float: "right",
-                    marginTop: "5vh",
-                  }}>
-                  자세히 보기
-                </button>{" "}
+          <p
+            style={{
+              lineHeight: "2em",
+              fontSize: "0.75rem",
+              whiteSpace: "nowrap",
+              marginBottom: "5vw",
+            }}>
+            부산 지역을 중심으로 찾은 결과입니다. <br />
+            센터마다 수리 가능 부품 및 운영 시간이 다르니 꼭 확인 후
+            방문해주세요!
+          </p>{" "}
+          <div style={{ textAlign: "center", width: "100%" }}>
+            {markers.map((marker, index) => (
+              <div
+                key={index}
+                style={{
+                  marginBottom: "10px",
+                  textAlign: "left",
+                  float: "left",
+                  width: "100%",
+                  height: "20vw",
+                }}>
+                <strong style={{ textAlign: "center" }}>
+                  {marker.content}
+                </strong>{" "}
                 {}
-              </a>
-              <p style={{ margin: 0 }}>주소: {marker.address}</p> {}
-              <p>전화: {marker.phone}</p> {}
-            </div>
-          ))}
-        </div>
-        {/* {loading && <p>Loading...</p>}
+                <a
+                  href={marker.place_url}
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  <button
+                    style={{
+                      float: "right",
+                      marginTop: "5vh",
+                    }}>
+                    자세히 보기
+                  </button>{" "}
+                  {}
+                </a>
+                <p style={{ margin: 0 }}>주소: {marker.address}</p> {}
+                <p>전화: {marker.phone}</p> {}
+              </div>
+            ))}
+          </div>
+          {/* {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
         {!loading && !error === 0 && <p>잠시 후 다시 이용해주세요</p>}{" "}
         <ul>
@@ -198,6 +205,7 @@ function FindCenterPage() {
             </li>
           ))}
         </ul> */}
+        </div>
       </div>
     </div>
   );

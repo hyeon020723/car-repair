@@ -76,7 +76,10 @@ function HomePage() {
     <div
       className="home-container"
       style={{ margin: "0", padding: "0", width: "100%", overflowX: "hidden" }}>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar
+        expand="lg"
+        className="bg-body-tertiary"
+        style={{ position: "fixed", width: "100%", top: 0, zIndex: 1000 }}>
         <Container style={{ justifyContent: "center" }}>
           <Navbar.Brand
             href="/"

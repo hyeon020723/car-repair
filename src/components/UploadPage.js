@@ -98,7 +98,10 @@ function UploadPage() {
 
   return (
     <div className="upload-container">
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar
+        expand="lg"
+        className="bg-body-tertiary"
+        style={{ position: "fixed", width: "100%", top: 0, zIndex: 1000 }}>
         <Container
           style={{
             display: "flex",
@@ -117,7 +120,7 @@ function UploadPage() {
 
       <form
         onSubmit={handleSubmit}
-        style={{ textAlign: "center", padding: "10vh" }}>
+        style={{ textAlign: "center", marginTop: "10vh", padding: "10vh" }}>
         <div
           style={{
             width: "100%",

@@ -30,7 +30,10 @@ function ResultPage() {
 
   return (
     <div className="result-container">
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar
+        expand="lg"
+        className="bg-body-tertiary"
+        style={{ position: "fixed", width: "100%", top: 0, zIndex: 1000 }}>
         <Container
           style={{
             display: "flex",
@@ -50,7 +53,8 @@ function ResultPage() {
       <div
         style={{
           height: "35vh",
-          margin: "5vw 10vw",
+          margin: "10vh",
+          marginTop: "15vh",
           background: "#ccc",
           overflow: "hidden",
         }}>
