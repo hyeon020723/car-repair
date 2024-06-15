@@ -6,6 +6,9 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 // import NavDropdown from "react-bootstrap/NavDropdown";
 
+import { Map } from "react-kakao-maps-sdk";
+// import useKakaoLoader from "./useKakaoLoader";
+
 function FindCenterPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [centers, setCenters] = useState([]);
@@ -60,6 +63,20 @@ function FindCenterPage() {
           <div style={{ width: 24 }}></div>{" "}
         </Container>
       </Navbar>
+      <Map
+        id="map"
+        center={{
+          // 기본 부경대 대연캠퍼스 좌표
+          lat: 35.13399144993564,
+          lng: 129.10554278982033,
+        }}
+        style={{
+          // 지도의 크기
+          width: "100%",
+          height: "250px",
+        }}
+        level={6}
+      />
 
       <div style={{ textAlign: "center", margin: "10vw" }}>
         <input
