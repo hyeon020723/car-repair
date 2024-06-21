@@ -5,24 +5,22 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 
 function UploadPage() {
-  const [file, setFile] = useState(null);
+  const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [carType, setCarType] = useState("");
   const [model, setModel] = useState("");
-  const navigate = useNavigate(); // Ensure this line is not deleted or altered incorrectly
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFile(reader.result);
-    };
-    reader.readAsDataURL(file);
+  const handleImageChange = (event) => {
+    if (event.target.files[0]) {
+      setImage(event.target.files[0]);
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!file) {
+    if (!image) {
       alert("사진 파일을 선택해주세요.");
       return;
     }
@@ -30,71 +28,41 @@ function UploadPage() {
       alert("모든 내용을 입력해주세요.");
       return;
     }
-    const requestData = {
-      car_type: carType, // Assuming 'carType' is a string e.g., "Hyundai"
-      model: model, // Assuming 'model' is a string e.g., "2020"
-    };
 
-    // 이미지
     const formData = new FormData();
-    formData.append("image", file); // `file`은 이미지 파일의 데이터를 포함해야 합니다. 여기서 file은 이미 Base64로 인코딩된 상태입니다.
+    formData.append("image", image);
+    formData.append("car_type", carType);
+    formData.append("car_model", model);
 
-    console.log("Sending image to the server...");
-
-    setIsLoading(true);
-    fetch("http://localhost:5000/upload", {
-      method: "POST",
-      body: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Image upload successful:", data);
-        setIsLoading(false);
-        alert("이미지 처리가 완료되었습니다.");
-        navigate("/result", { state: { image: file, response: data } });
-      })
-      .catch((error) => {
-        console.error("Image upload error:", error);
-        setIsLoading(false);
-        alert("이미지 업로드에 실패하였습니다.");
-      });
-    console.log("Sending data:", requestData);
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
 
     setIsLoading(true);
-    fetch(
-      "https://pxuefku0cb.execute-api.ap-northeast-2.amazonaws.com/default",
-      {
+    try {
+      const response = await fetch("http://3.35.126.206:5000/upload", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": "8CyDGFGBo70VXBUbpSzU3tiCm5u69sR3GaeZ3xXg",
-        },
-        body: JSON.stringify(requestData),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        setIsLoading(false);
-        alert("내용이 전송되었습니다.");
-        navigate("/result", { state: { image: file, response: data } });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setIsLoading(false);
-        alert("다시 시도해주세요.");
+        body: formData,
       });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Image upload successful:", data);
+        navigate("/result", {
+          state: { image: URL.createObjectURL(image), response: data },
+        });
+      } else {
+        throw new Error(
+          `Failed to upload image: ${response.status} ${response.statusText}`
+        );
+      }
+    } catch (error) {
+      console.error("Image upload error:", error);
+      alert(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
-  /* eslint-enable no-unused-vars */
-  //eslint-disable-line no-unused-vars
-  const requestData = {
-    car_type: carType, // Assuming 'carType' is a string e.g., "Hyundai"
-    model: model, // Assuming 'model' is a string e.g., "2020"
-  };
-  /* eslint-enable no-unused-vars */
 
   return (
     <div className="upload-container">
@@ -121,12 +89,14 @@ function UploadPage() {
       <form
         onSubmit={handleSubmit}
         style={{ textAlign: "center", marginTop: "10vh", padding: "10vh" }}>
-        <div
-          style={{
-            width: "100%",
-          }}>
-          <input type="file" onChange={handleFileChange} required />
-
+        <div style={{ width: "100%" }}>
+          <input
+            type="file"
+            name="image"
+            onChange={handleImageChange}
+            required
+            accept="image/*"
+          />
           <p
             style={{
               paddingTop: "2vh",
@@ -138,75 +108,64 @@ function UploadPage() {
             한장만 업로드해주세요
           </p>
         </div>
-        <div style={{ height: "30vh" }}>
-          <p style={{ float: "left", fontSize: "1em", whiteSpace: "nowrap" }}>
-            차량 정보 선택
-          </p>
-          <div id="selectbox" style={{ float: "right" }}>
-            <select
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "1vh",
-                margin: "1vh",
-              }}
-              value={carType}
-              onChange={(e) => setCarType(e.target.value)}
-              required>
-              <option value="">Select Car Type</option>
-              <option value="BMW">BMW</option>
-              <option value="Audi">아우디</option>
-              <option value="Volkswagen">폭스바겐</option>
-              <option value="Kia">기아</option>
-              <option value="Hyundai">현대</option>
-            </select>
+        <div style={{ marginTop: "4vh" }}>
+          <select
+            name="car_type"
+            style={{ width: "100%", padding: "2vh", margin: "1vh" }}
+            value={carType}
+            onChange={(e) => setCarType(e.target.value)}
+            placeholder="Car Type"
+            required>
+            <option value="">차량 종류 선택</option>
+            <option value="BMW">BMW</option>
+            <option value="Audi">아우디</option>
+            <option value="Volkswagen">폭스바겐</option>
+            <option value="Kia">기아</option>
+            <option value="Hyundai">현대</option>
+          </select>
 
-            <select
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "1vh",
-                margin: "1vh",
-              }}
-              value={model}
-              onChange={(e) => setModel(e.target.value)}
-              required>
-              <option value="">Select Model</option>
-              {carType === "BMW" && (
-                <>
-                  <option value="3 Series">3 시리즈</option>
-                  <option value="5 Series">5 시리즈</option>
-                </>
-              )}
-              {carType === "Audi" && (
-                <>
-                  <option value="A4">A4</option>
-                  <option value="A6">A6</option>
-                </>
-              )}
-              {carType === "Volkswagen" && (
-                <>
-                  <option value="golf">골프</option>
-                </>
-              )}
-              {carType === "Kia" && (
-                <>
-                  <option value="K3">K3</option>
-                  <option value="K5">K5</option>
-                </>
-              )}
-              {carType === "Hyundai" && (
-                <>
-                  <option value="Sonata 14 LF">소나타 14 LF</option>
-                  <option value="Grandeur 15 HG">그랜저 15 HG</option>
-                </>
-              )}
-            </select>
-          </div>
+          <select
+            name="car_model"
+            style={{ width: "100%", padding: "2vh", margin: "1vh" }}
+            value={model}
+            onChange={(e) => setModel(e.target.value)}
+            placeholder="Car Model"
+            required>
+            <option value="">모델 선택</option>
+            {carType === "BMW" && (
+              <>
+                <option value="3 Series">3 시리즈</option>
+                <option value="5 Series">5 시리즈</option>
+              </>
+            )}
+            {carType === "Audi" && (
+              <>
+                <option value="A4">A4</option>
+                <option value="A6">A6</option>
+              </>
+            )}
+            {carType === "Volkswagen" && (
+              <>
+                <option value="Golf">골프</option>
+              </>
+            )}
+            {carType === "Kia" && (
+              <>
+                <option value="K3">K3</option>
+                <option value="K5">K5</option>
+              </>
+            )}
+            {carType === "Hyundai" && (
+              <>
+                <option value="Sonata 14 LF">소나타 14 LF</option>
+                <option value="Grandeur 15 HG">그랜저 15 HG</option>
+              </>
+            )}
+          </select>
         </div>
         {isLoading && <p>Loading...</p>}
         <Button
-          variant={file && carType && model ? "primary" : "secondary"}
+          variant={image && carType && model ? "primary" : "secondary"}
           size="lg"
           type="submit">
           견적 내기
