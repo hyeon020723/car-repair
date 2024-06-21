@@ -34,8 +34,8 @@ function UploadPage() {
     formData.append("car_type", carType);
     formData.append("car_model", model);
 
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
+    for (let entry of formData.entries()) {
+      console.log(entry[0] + ":", entry[1]);
     }
 
     setIsLoading(true);
@@ -58,7 +58,7 @@ function UploadPage() {
       }
     } catch (error) {
       console.error("Image upload error:", error);
-      alert(error.message);
+      setError(error.toString());
     } finally {
       setIsLoading(false);
     }
