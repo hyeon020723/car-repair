@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 function ResultPage() {
   const location = useLocation();
   const { response } = location.state || {}; // Directly use the response object if properly passed
-  const image = response?.original_image; // Adjusted to use the direct URL from the state
+  const image = response?.yolo_image; // Adjusted to use the direct URL from the state
 
   // Initialize damage details with defaults
   const [damageDetails, setDamageDetails] = useState([]);
@@ -59,7 +59,7 @@ function ResultPage() {
         }}>
         {image ? (
           <img
-            src={image}
+            src={`data:image/jpeg;base64,${image}`}
             alt="Uploaded"
             style={{ width: "100%", height: "100%", objectFit: "scale-down" }}
           />
