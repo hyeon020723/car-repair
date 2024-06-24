@@ -5,8 +5,8 @@ import { useLocation } from "react-router-dom";
 function ResultPage() {
   const location = useLocation();
   const { response } = location.state || {};
-  const yoloImage = response?.yolo_image;
-  const unetImage = response?.unet_image;
+  const yoloImage = response?.yolo_damage_image;
+  const partImage = response?.yolo_part_image;
 
   const [damageDetails, setDamageDetails] = useState([]);
 
@@ -60,9 +60,9 @@ function ResultPage() {
           <p>No YOLO image uploaded</p>
         )}
 
-        {unetImage ? (
+        {partImage ? (
           <img
-            src={`data:image/jpeg;base64,${unetImage}`}
+            src={`data:image/jpeg;base64,${partImage}`}
             alt="UNet Processed"
             style={{ width: "50%", height: "100%", objectFit: "scale-down" }}
           />
