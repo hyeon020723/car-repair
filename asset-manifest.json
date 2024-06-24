@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/hyeon020723/car-repair-service/static/css/main.cba0bfdc.css",
+    "main.js": "/hyeon020723/car-repair-service/static/js/main.06517b41.js",
+    "static/js/206.d0755bc2.chunk.js": "/hyeon020723/car-repair-service/static/js/206.d0755bc2.chunk.js",
+    "static/media/accident_img.jpg": "/hyeon020723/car-repair-service/static/media/accident_img.a64c44f54761cf9bf17b.jpg",
+    "static/media/main_img.jpg": "/hyeon020723/car-repair-service/static/media/main_img.679e58e9f8a86e0da0b0.jpg",
+    "static/media/slick.svg": "/hyeon020723/car-repair-service/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/hyeon020723/car-repair-service/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/hyeon020723/car-repair-service/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/hyeon020723/car-repair-service/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/hyeon020723/car-repair-service/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.cba0bfdc.css",
+    "static/js/main.06517b41.js"
+  ]
+}
