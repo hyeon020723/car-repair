@@ -4,10 +4,9 @@ import { useLocation } from "react-router-dom";
 
 function ResultPage() {
   const location = useLocation();
-  const { response } = location.state || {}; // Directly use the response object if properly passed
-  const image = response?.yolo_image; // Adjusted to use the direct URL from the state
+  const { response } = location.state || {};
+  const image = response?.yolo_image;
 
-  // Initialize damage details with defaults
   const [damageDetails, setDamageDetails] = useState([]);
 
   useEffect(() => {
@@ -15,17 +14,6 @@ function ResultPage() {
       setDamageDetails(response.repair_info);
     }
   }, [response]);
-
-  // Calculating total repair cost
-  const totalRepairCost = damageDetails.reduce(
-    (sum, item) =>
-      sum +
-      parseInt(
-        item.estimated_repair_cost.replace("원", "").replace(",", ""),
-        10
-      ),
-    100000
-  ); // Adding labor cost
 
   return (
     <div className="result-container">
@@ -70,6 +58,8 @@ function ResultPage() {
 
       <div style={{ margin: "7.5vw" }}>
         <p style={{ textAlign: "center", fontSize: "0.75em" }}>
+          공임비를 포함한 결과값입니다.
+          <br />
           실제 수리비와 차이가 있을 수 있습니다.
         </p>
       </div>
@@ -80,14 +70,9 @@ function ResultPage() {
           {damageDetails.map((item, index) => (
             <p key={index}>
               파손위치: {item.damage_location}
-              <br />
-              수리비: {item.estimated_repair_cost}
+              <br />총 {item.estimated_repair_cost}원
             </p>
           ))}
-          <p>+ 공임비 100,000원</p>
-          <p style={{ fontSize: "1.25em", fontWeight: "bold" }}>
-            = 총 {totalRepairCost.toLocaleString()}원
-          </p>
         </div>
       </div>
     </div>
