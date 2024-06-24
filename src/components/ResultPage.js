@@ -5,7 +5,8 @@ import { useLocation } from "react-router-dom";
 function ResultPage() {
   const location = useLocation();
   const { response } = location.state || {};
-  const image = response?.yolo_image;
+  const yoloImage = response?.yolo_image;
+  const unetImage = response?.unet_image;
 
   const [damageDetails, setDamageDetails] = useState([]);
 
@@ -36,41 +37,48 @@ function ResultPage() {
           <div style={{ width: 24 }}></div>
         </Container>
       </Navbar>
-
       <div
         style={{
-          height: "35vh",
-          margin: "10vh",
+          width: "80%",
+          margin: "10%",
           marginTop: "15vh",
           background: "#ccc",
-          overflow: "hidden",
         }}>
-        {image ? (
+        {yoloImage ? (
           <img
-            src={`data:image/jpeg;base64,${image}`}
-            alt="Uploaded"
-            style={{ width: "100%", height: "100%", objectFit: "scale-down" }}
+            src={`data:image/jpeg;base64,${yoloImage}`}
+            alt="YOLO Processed"
+            style={{ width: "50%", height: "100%", objectFit: "scale-down" }}
           />
         ) : (
-          <p>No image uploaded</p>
+          <p>No YOLO image uploaded</p>
+        )}
+
+        {unetImage ? (
+          <img
+            src={`data:image/jpeg;base64,${unetImage}`}
+            alt="UNet Processed"
+            style={{ width: "50%", height: "100%", objectFit: "scale-down" }}
+          />
+        ) : (
+          <p>No UNet image uploaded</p>
         )}
       </div>
-
       <div style={{ margin: "7.5vw" }}>
         <p style={{ textAlign: "center", fontSize: "0.75em" }}>
-          공임비를 포함한 결과값입니다.
+          공임비를 포함한 결과 값입니다.
           <br />
-          실제 수리비와 차이가 있을 수 있습니다.
+          실제와 차이가 있을 수 있습니다.
         </p>
       </div>
-
       <div style={{ margin: "5vw 10vw" }}>
-        <p style={{ color: "royalblue", float: "left" }}>예상 수리비</p>
+        <p style={{ color: "royalblue", float: "left" }}>예측 결과</p>
+
         <div style={{ textAlign: "right" }}>
           {damageDetails.map((item, index) => (
             <p key={index}>
-              파손위치: {item.damage_location}
-              <br />총 {item.estimated_repair_cost}원
+              파손 위치 : {item.damage_location}
+              <br />총 비용 : {item.estimated_repair_cost}원
             </p>
           ))}
         </div>
