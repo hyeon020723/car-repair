@@ -1,3 +1,7 @@
 [build]
 publish = "build"
 command = "npm run build"
+
+[submodule "carfix_lambda"]
+  path = carfix_lambda
+  url = https://github.com/iububble/carfix_lambda/tree/yolo
