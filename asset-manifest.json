@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/car-repair-service/static/css/main.41a5ed15.css",
-    "main.js": "/car-repair-service/static/js/main.c65af31a.js",
+    "main.js": "/car-repair-service/static/js/main.c31852af.js",
     "static/js/206.d0755bc2.chunk.js": "/car-repair-service/static/js/206.d0755bc2.chunk.js",
     "static/media/accident_img.jpg": "/car-repair-service/static/media/accident_img.a64c44f54761cf9bf17b.jpg",
     "static/media/main_img.jpg": "/car-repair-service/static/media/main_img.679e58e9f8a86e0da0b0.jpg",
@@ -13,6 +13,6 @@
   },
   "entrypoints": [
     "static/css/main.41a5ed15.css",
-    "static/js/main.c65af31a.js"
+    "static/js/main.c31852af.js"
   ]
 }
