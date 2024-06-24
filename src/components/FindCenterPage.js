@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-//nav
 import Container from "react-bootstrap/Container";
-// import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { flushSync } from "react-dom";
-// import NavDropdown from "react-bootstrap/NavDropdown";
-
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-// import useKakaoLoader from "./useKakaoLoader";
 
 function FindCenterPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,41 +10,10 @@ function FindCenterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Dummy data for repair centers
-  // const repairCenters = [
-  //   { name: "Hyundai Motor Studio", address: "대연동, 부산" },
-  //   { name: "Kia Service Center", address: "남천동, 부산" },
-  //   { name: "Auto Repair Co.", address: "감만동, 부산" },
-  // ];
-
-  // const handleSearch = () => {
-  //   if (!searchTerm) {
-  //     setError("Please enter a search term");
-  //     return;
-  //   }
-  //   setError("");
-  //   setLoading(true);
-
-  //   // Simulate API call
-  //   setTimeout(() => {
-  //     const filteredCenters = repairCenters.filter((center) =>
-  //       center.address.includes(searchTerm)
-  //     );
-  //     if (filteredCenters.length === 0) {
-  //       setError("검색결과를 찾을 수 없습니다.");
-  //     } else {
-  //       setCenters(filteredCenters);
-  //     }
-  //     setLoading(false);
-  //   }, 1000);
-  // };
-
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
-  // const [sdkReady, setSdkReady] = useState(false);
 
-  // Use Places service after confirming the SDK is ready
   useEffect(() => {
     if (!map) return;
 
@@ -58,7 +21,6 @@ function FindCenterPage() {
 
     places.keywordSearch("부산 자동차 정비", (data, status, _pagination) => {
       if (status === window.kakao.maps.services.Status.OK) {
-        // handle the data
         console.log(data);
 
         const bounds = new window.kakao.maps.LatLngBounds();
@@ -143,13 +105,6 @@ function FindCenterPage() {
         </Map>
 
         <div style={{ textAlign: "center", margin: "5vw" }}>
-          {/* <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Enter location"
-        />
-        <button onClick={handleSearch}>Search</button> */}
           <p
             style={{
               lineHeight: "2em",
@@ -194,17 +149,6 @@ function FindCenterPage() {
               </div>
             ))}
           </div>
-          {/* {loading && <p>Loading...</p>}
-        {error && <p>{error}</p>}
-        {!loading && !error === 0 && <p>잠시 후 다시 이용해주세요</p>}{" "}
-        <ul>
-          {centers.map((center, index) => (
-            <li key={index}>
-              <strong>{center.name}</strong>
-              <p>{center.address}</p>
-            </li>
-          ))}
-        </ul> */}
         </div>
       </div>
     </div>
