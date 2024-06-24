@@ -118,10 +118,10 @@ function UploadPage() {
             required>
             <option value="">차량 종류 선택</option>
             <option value="BMW">BMW</option>
-            <option value="Audi">아우디</option>
-            <option value="Volkswagen">폭스바겐</option>
-            <option value="Kia">기아</option>
-            <option value="Hyundai">현대</option>
+            <option value="아우디">아우디</option>
+            <option value="폭스바겐">폭스바겐</option>
+            <option value="기아">기아</option>
+            <option value="현대">현대</option>
           </select>
 
           <select
@@ -134,31 +134,31 @@ function UploadPage() {
             <option value="">모델 선택</option>
             {carType === "BMW" && (
               <>
-                <option value="3 Series">3 시리즈</option>
-                <option value="5 Series">5 시리즈</option>
+                <option value="3">3 시리즈</option>
+                <option value="5">5 시리즈</option>
               </>
             )}
-            {carType === "Audi" && (
+            {carType === "아우디" && (
               <>
                 <option value="A4">A4</option>
                 <option value="A6">A6</option>
               </>
             )}
-            {carType === "Volkswagen" && (
+            {carType === "폭스바겐" && (
               <>
-                <option value="Golf">골프</option>
+                <option value="골프">골프</option>
               </>
             )}
-            {carType === "Kia" && (
+            {carType === "기아" && (
               <>
                 <option value="K3">K3</option>
                 <option value="K5">K5</option>
               </>
             )}
-            {carType === "Hyundai" && (
+            {carType === "현대" && (
               <>
-                <option value="Sonata 14 LF">소나타 14 LF</option>
-                <option value="Grandeur 15 HG">그랜저 15 HG</option>
+                <option value="소나타LF">소나타 14 LF</option>
+                <option value="그랜저HG15">그랜저 15 HG</option>
               </>
             )}
           </select>
