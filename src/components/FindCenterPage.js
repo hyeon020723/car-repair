@@ -5,11 +5,6 @@ import Navbar from "react-bootstrap/Navbar";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 function FindCenterPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [centers, setCenters] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();

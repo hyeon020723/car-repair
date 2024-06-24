@@ -10,6 +10,7 @@ function UploadPage() {
   const [carType, setCarType] = useState("");
   const [model, setModel] = useState("");
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
 
   const handleImageChange = (event) => {
