@@ -16,6 +16,12 @@ function ResultPage() {
     }
   }, [response]);
 
+  const formatCost = (cost) => {
+    const parsedCost = parseFloat(cost);
+    const roundedCost = Math.round(parsedCost / 1000) * 1000;
+    return `${roundedCost.toLocaleString()}`;
+  };
+
   return (
     <div className="result-container">
       <Navbar
@@ -66,9 +72,7 @@ function ResultPage() {
       </div>
       <div style={{ margin: "7.5vw" }}>
         <p style={{ textAlign: "center", fontSize: "0.75em" }}>
-          공임비를 포함한 결과 값입니다.
-          <br />
-          실제와 차이가 있을 수 있습니다.
+          공임비를 포함한 결과 값으로, 실제와 차이가 있을 수 있습니다.
         </p>
       </div>
       <div style={{ margin: "5vw 10vw" }}>
@@ -78,7 +82,7 @@ function ResultPage() {
           {damageDetails.map((item, index) => (
             <p key={index}>
               파손 위치 : {item.damage_location}
-              <br />총 비용 : {item.estimated_repair_cost}원
+              <br />총 비용 : {formatCost(item.estimated_repair_cost)}원
             </p>
           ))}
         </div>
