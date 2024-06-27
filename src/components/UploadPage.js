@@ -78,7 +78,7 @@ function UploadPage() {
             alignItems: "center",
           }}>
           <Navbar.Brand
-            href="/"
+            href="/car-repair-service"
             style={{ color: "royalblue", fontWeight: "bold" }}>
             {"<"}
           </Navbar.Brand>
