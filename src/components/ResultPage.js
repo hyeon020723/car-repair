@@ -17,6 +17,9 @@ function ResultPage() {
   }, [response]);
 
   const formatCost = (cost) => {
+    if (cost === "Not Found in DB") {
+      return (cost = "-");
+    }
     const parsedCost = parseFloat(cost);
     const roundedCost = Math.round(parsedCost / 1000) * 1000;
     return `${roundedCost.toLocaleString()}`;
@@ -35,7 +38,7 @@ function ResultPage() {
             alignItems: "center",
           }}>
           <Navbar.Brand
-            href="/"
+            href="/car-repair-service"
             style={{ color: "royalblue", fontWeight: "bold" }}>
             {"<"}
           </Navbar.Brand>
@@ -82,7 +85,8 @@ function ResultPage() {
           {damageDetails.map((item, index) => (
             <p key={index}>
               파손 위치 : {item.damage_location}
-              <br />총 비용 : {formatCost(item.estimated_repair_cost)}원
+              <br />
+              비용 : {formatCost(item.estimated_repair_cost)}원
             </p>
           ))}
         </div>
